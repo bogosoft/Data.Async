@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Bogosoft.Data.Async.Tests
 {
-    class CelestialBodyDataReader : ExtendedDataReaderBase
+    class CelestialBodyDataReader : SimplifiedDataReaderBase
     {
         IEnumerator<CelestialBody> enumerator = CelestialBody.All.GetEnumerator();
 

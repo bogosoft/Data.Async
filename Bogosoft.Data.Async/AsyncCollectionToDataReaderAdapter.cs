@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bogosoft.Data.Async
 {
-    class AsyncCollectionToDataReaderAdapter<T> : ExtendedDataReaderBase
+    class AsyncCollectionToDataReaderAdapter<T> : SimplifiedDataReaderBase
     {
         object[] buffer;
         Dictionary<string, int> columnIndicesByName = new Dictionary<string, int>();
