@@ -34,16 +34,18 @@ namespace Bogosoft.Data.Async
         protected abstract TCommand BuildCommand(TConnection connection);
 
         /// <summary>
-        /// Get an object that represents a connection to a data source.
+        /// Get an object representing a connection to a data source.
         /// </summary>
-        /// <returns>A data source connection.</returns>
-        protected abstract TConnection Connect();
+        /// <returns>A connection to a data source.</returns>
+        protected abstract Task<TConnection> ConnectAsync();
 
         /// <summary>
         /// Get an object capable of asynchronously enumerating over the current sequence.
         /// </summary>
         /// <returns>An asynchronous enumerator.</returns>
-        public IAsyncEnumerator<TEntity> GetEnumerator()
+        public IAsyncEnumerator<TEntity> GetEnumerator() => GetEnumeratorAsync().GetAwaiter().GetResult();
+
+        async Task<IAsyncEnumerator<TEntity>> GetEnumeratorAsync()
         {
             TCommand command = null;
             TConnection connection = null;
@@ -51,16 +53,16 @@ namespace Bogosoft.Data.Async
 
             try
             {
-                connection = Connect();
+                connection = await ConnectAsync();
 
                 if (connection.State != ConnectionState.Open)
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
                 }
 
                 command = BuildCommand(connection);
 
-                reader = command.ExecuteReader() as TReader;
+                reader = await command.ExecuteReaderAsync() as TReader;
             }
             catch (Exception)
             {
