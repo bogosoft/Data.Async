@@ -5,13 +5,12 @@ using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bogosoft.Data.Async.Tests
 {
-    [TestFixture, Category("Unit")]
-    public class UnitTests
+    [TestFixture, Category("End2End")]
+    public class End2EndTests
     {
         const string Mass = "Mass";
         const string Name = "Name";
