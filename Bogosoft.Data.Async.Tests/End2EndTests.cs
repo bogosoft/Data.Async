@@ -44,11 +44,7 @@ namespace Bogosoft.Data.Async.Tests
                 {
                     DistanceToPrimary = reader.GetFieldValue<float>(PrimaryDistance)
                 },
-#if NET45
                 Type = (CelestialBodyType)Enum.Parse(typeof(CelestialBodyType), reader.GetFieldValue<string>(Type))
-#else
-                Type = Enum.Parse<CelestialBodyType>(reader.GetFieldValue<string>(Type))
-#endif
             };
         }
 
