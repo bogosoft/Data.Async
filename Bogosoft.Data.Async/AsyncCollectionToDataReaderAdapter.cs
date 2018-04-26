@@ -11,7 +11,7 @@ namespace Bogosoft.Data.Async
     {
         object[] buffer;
         Dictionary<string, int> columnIndicesByName = new Dictionary<string, int>();
-        Column<T>[] columns;
+        FieldAdapter<T>[] fields;
         DataTable schemaTable;
         IAsyncEnumerator<T> source;
 
@@ -19,7 +19,7 @@ namespace Bogosoft.Data.Async
 
         public override int Depth => 0;
 
-        public override int FieldCount => columns.Length;
+        public override int FieldCount => fields.Length;
 
         public override bool HasRows => true;
 
@@ -27,19 +27,19 @@ namespace Bogosoft.Data.Async
 
         public override int RecordsAffected => 0;
 
-        internal AsyncCollectionToDataReaderAdapter(IAsyncEnumerator<T> source, Column<T>[] columns)
+        internal AsyncCollectionToDataReaderAdapter(IAsyncEnumerator<T> source, FieldAdapter<T>[] fields)
         {
-            buffer = new object[columns.Length];
+            buffer = new object[fields.Length];
 
-            this.columns = columns;
+            this.fields = fields;
 
             schemaTable = new DataTable();
 
             for (var i = 0; i < buffer.Length; i++)
             {
-                columnIndicesByName[columns[i].Name] = i;
+                columnIndicesByName[fields[i].Name] = i;
 
-                schemaTable.Columns.Add(columns[i].Name, columns[i].Type);
+                schemaTable.Columns.Add(fields[i].Name, fields[i].Type);
             }
 
             this.source = source;
@@ -57,9 +57,9 @@ namespace Bogosoft.Data.Async
             source = null;
         }
 
-        public override Type GetFieldType(int ordinal) => columns[ordinal].Type;
+        public override Type GetFieldType(int ordinal) => fields[ordinal].Type;
 
-        public override string GetName(int ordinal) => columns[ordinal].Name;
+        public override string GetName(int ordinal) => fields[ordinal].Name;
 
         public override int GetOrdinal(string name) => columnIndicesByName[name];
 
@@ -118,9 +118,9 @@ namespace Bogosoft.Data.Async
         {
             if (await source.MoveNextAsync(token))
             {
-                for (var i = 0; i < columns.Length; i++)
+                for (var i = 0; i < fields.Length; i++)
                 {
-                    buffer[i] = columns[i].ExtractValueFrom(source.Current);
+                    buffer[i] = fields[i].ExtractValueFrom(source.Current);
                 }
 
                 return true;

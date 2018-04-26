@@ -15,14 +15,14 @@ namespace Bogosoft.Data.Async
         /// </summary>
         /// <typeparam name="T">The type of the items in the current sequence.</typeparam>
         /// <param name="items">The current <see cref="IAsyncEnumerable{T}"/> implementation.</param>
-        /// <param name="columns">
-        /// A sequence of columns for the new data record. The ordinal position of each column in the sequence
+        /// <param name="fields">
+        /// A sequence of field adapters for the new data record. The ordinal position of each field in the sequence
         /// will populate the corresponding ordinal position in a record with its value extractor.
         /// </param>
         /// <returns>A new data reader.</returns>
-        public static DbDataReader ToDbDataReader<T>(this IAsyncEnumerable<T> items, IEnumerable<Column<T>> columns)
+        public static DbDataReader ToDbDataReader<T>(this IAsyncEnumerable<T> items, IEnumerable<FieldAdapter<T>> fields)
         {
-            return new AsyncCollectionToDataReaderAdapter<T>(items.GetEnumerator(), columns.ToArray());
+            return new AsyncCollectionToDataReaderAdapter<T>(items.GetEnumerator(), fields.ToArray());
         }
 
         /// <summary>
@@ -30,14 +30,14 @@ namespace Bogosoft.Data.Async
         /// </summary>
         /// <typeparam name="T">The type of the items in the current sequence.</typeparam>
         /// <param name="items">The current <see cref="IAsyncEnumerable{T}"/> implementation.</param>
-        /// <param name="columns">
-        /// A sequence of columns for the new data record. The ordinal position of each column in the sequence
+        /// <param name="fields">
+        /// A sequence of field adapters for the new data record. The ordinal position of each field in the sequence
         /// will populate the corresponding ordinal position in a record with its value extractor.
         /// </param>
         /// <returns>A new data reader.</returns>
-        public static DbDataReader ToDbDataReader<T>(this IAsyncEnumerable<T> items, params Column<T>[] columns)
+        public static DbDataReader ToDbDataReader<T>(this IAsyncEnumerable<T> items, params FieldAdapter<T>[] fields)
         {
-            return new AsyncCollectionToDataReaderAdapter<T>(items.GetEnumerator(), columns);
+            return new AsyncCollectionToDataReaderAdapter<T>(items.GetEnumerator(), fields);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Bogosoft.Data.Async.Tests
         const string PrimaryDistance = "Distance to Primary";
         const string Type = "Type";
 
-        static List<Column<CelestialBody>> Columns = new List<Column<CelestialBody>>();
+        static List<FieldAdapter<CelestialBody>> Columns = new List<FieldAdapter<CelestialBody>>();
 
         static bool AreEqual(CelestialBody a, CelestialBody b)
         {
@@ -55,10 +55,10 @@ namespace Bogosoft.Data.Async.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            Columns.Add(new Column<CelestialBody>(Name, typeof(string), x => x.Name));
-            Columns.Add(new Column<CelestialBody>(Type, typeof(string), x => x.Type.ToString()));
-            Columns.Add(new Column<CelestialBody>(Mass, typeof(float), x => x.Mass));
-            Columns.Add(new Column<CelestialBody>(PrimaryDistance, typeof(float), x => x.Orbit.DistanceToPrimary));
+            Columns.Add(new FieldAdapter<CelestialBody>(Name, typeof(string), x => x.Name));
+            Columns.Add(new FieldAdapter<CelestialBody>(Type, typeof(string), x => x.Type.ToString()));
+            Columns.Add(new FieldAdapter<CelestialBody>(Mass, typeof(float), x => x.Mass));
+            Columns.Add(new FieldAdapter<CelestialBody>(PrimaryDistance, typeof(float), x => x.Orbit.DistanceToPrimary));
         }
 
         [TestCase]
