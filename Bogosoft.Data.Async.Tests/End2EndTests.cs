@@ -17,7 +17,7 @@ namespace Bogosoft.Data.Async.Tests
         const string PrimaryDistance = "Distance to Primary";
         const string Type = "Type";
 
-        static List<FieldAdapter<CelestialBody>> Columns = new List<FieldAdapter<CelestialBody>>();
+        static List<FieldAdapter<CelestialBody>> Fields = new List<FieldAdapter<CelestialBody>>();
 
         static CelestialBody ReadCelestialBody(DbDataReader reader)
         {
@@ -36,10 +36,10 @@ namespace Bogosoft.Data.Async.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            Columns.Add(new FieldAdapter<CelestialBody>(Name, typeof(string), x => x.Name));
-            Columns.Add(new FieldAdapter<CelestialBody>(Type, typeof(string), x => x.Type.ToString()));
-            Columns.Add(new FieldAdapter<CelestialBody>(Mass, typeof(float), x => x.Mass));
-            Columns.Add(new FieldAdapter<CelestialBody>(PrimaryDistance, typeof(float), x => x.Orbit.DistanceToPrimary));
+            Fields.Add(new FieldAdapter<CelestialBody>(Name, typeof(string), x => x.Name));
+            Fields.Add(new FieldAdapter<CelestialBody>(Type, typeof(string), x => x.Type.ToString()));
+            Fields.Add(new FieldAdapter<CelestialBody>(Mass, typeof(float), x => x.Mass));
+            Fields.Add(new FieldAdapter<CelestialBody>(PrimaryDistance, typeof(float), x => x.Orbit.DistanceToPrimary));
         }
 
         [TestCase]
@@ -47,7 +47,7 @@ namespace Bogosoft.Data.Async.Tests
         {
             var expected = CelestialBody.All.ToAsyncEnumerable();
 
-            var actual = expected.ToDbDataReader(Columns).ToAsyncEnumerable(ReadCelestialBody);
+            var actual = expected.ToDbDataReader(Fields).ToAsyncEnumerable(ReadCelestialBody);
 
             using (var a = actual.GetEnumerator())
             using (var e = expected.GetEnumerator())
@@ -79,11 +79,27 @@ namespace Bogosoft.Data.Async.Tests
         }
 
         [TestCase]
-        public void CanConvertDbDataReaderToAsyncEnumerableAndBack()
+        public async Task CanConvertDbDataReaderToAsyncEnumerableAndBack()
         {
-            new CelestialBodyDataReader().ToAsyncEnumerable(ReadCelestialBody)
-                                         .ToDbDataReader(Columns)
-                                         .ShouldHaveSameDataAs(new CelestialBodyDataReader());
+            DbDataReader actual, expected = new CelestialBodyDataReader();
+
+            actual = new CelestialBodyDataReader().ToAsyncEnumerable(ReadCelestialBody).ToDbDataReader(Fields);
+
+            actual.FieldCount.ShouldBe(expected.FieldCount);
+
+            while (await actual.ReadAsync())
+            {
+                (await expected.ReadAsync()).ShouldBeTrue();
+
+                for (var i = 0; i < expected.FieldCount; i++)
+                {
+                    actual[i].ShouldBe(expected[i]);
+
+                    actual.GetValue(i).ShouldBe(expected[i]);
+                }
+            }
+
+            (await expected.ReadAsync()).ShouldBeFalse();
         }
     }
 }
