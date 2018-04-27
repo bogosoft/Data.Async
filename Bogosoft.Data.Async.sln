@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bogosoft.Data.Async", "Bogosoft.Data.Async\Bogosoft.Data.Async.csproj", "{78886238-8681-470D-AF78-5A7D0A15E77B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bogosoft.Data.Async.Tests", "Bogosoft.Data.Async.Tests\Bogosoft.Data.Async.Tests.csproj", "{7CFC82D5-1E5B-499F-A93B-5BDA6F7840CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78886238-8681-470D-AF78-5A7D0A15E77B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78886238-8681-470D-AF78-5A7D0A15E77B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78886238-8681-470D-AF78-5A7D0A15E77B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78886238-8681-470D-AF78-5A7D0A15E77B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFC82D5-1E5B-499F-A93B-5BDA6F7840CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFC82D5-1E5B-499F-A93B-5BDA6F7840CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFC82D5-1E5B-499F-A93B-5BDA6F7840CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFC82D5-1E5B-499F-A93B-5BDA6F7840CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {614B81DB-3C5B-4390-AE7C-133FD3862AFC}
+	EndGlobalSection
+EndGlobal

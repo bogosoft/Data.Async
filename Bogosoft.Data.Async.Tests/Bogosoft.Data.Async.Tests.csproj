@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Bogosoft.Testing.Objects" Version="1.1.0.6" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+		<PackageReference Include="NUnit" Version="3.8.1" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+		<PackageReference Include="Shouldly" Version="2.8.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Bogosoft.Collections.Async" Version="2.0.1.28" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Bogosoft.Data.Async\Bogosoft.Data.Async.csproj" />
+	</ItemGroup>
+</Project>
